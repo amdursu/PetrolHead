@@ -33,7 +33,7 @@ public class DBHandler {
         instr2.setString(1, name);
         instr2.setString(2, surname);
         instr2.setString(3, email);
-        instr2.setString(4, sha1(password));
+        instr2.setString(4, sha1(password).toLowerCase());
         instr2.setString(5, "user");
         instr2.execute();
         return true;
