@@ -64,10 +64,8 @@ public class CarsDAO {
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
-            c.close();
             return rs.getInt("id");        
         }
-        c.close();
         return 0;
     }
     

@@ -39,7 +39,6 @@ public class ReviewsDAO {
         while(rs.next()){
             reviews.add(new Review(rs.getString("title"), rs.getString("body"), rs.getString("car"), rs.getString("userid")));
         }
-        c.close();
         return reviews;
     }
     
