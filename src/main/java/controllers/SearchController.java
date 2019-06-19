@@ -45,7 +45,7 @@ public class SearchController extends HttpServlet {
         Connection c = DBConnection.getConnection();
         String[] words = search.split(" ");
         for(String word : words){
-            String sql1 = "SELECT manufacturer, model, img, description FROM \"PetrolHead\".cars WHERE model LIKE '%" + word + "%';";
+            String sql1 = "SELECT manufacturer, model, img, description FROM \"PetrolHead\".cars WHERE model ILIKE '%" + word + "%';";
             Statement instr1 = c.createStatement();
             ResultSet rs1 = instr1.executeQuery(sql1);
             while(rs1.next()){
@@ -63,7 +63,7 @@ public class SearchController extends HttpServlet {
         Connection c = DBConnection.getConnection();
         String[] words = search.split(" ");
         for(String word : words){
-            String sql = "SELECT name, image_path FROM \"PetrolHead\".manufacturers WHERE name LIKE '%" + word + "%';";
+            String sql = "SELECT name, image_path FROM \"PetrolHead\".manufacturers WHERE name ILIKE '%" + word + "%';";
             Statement instr = c.createStatement();
             ResultSet rs = instr.executeQuery(sql);
             while(rs.next()){
