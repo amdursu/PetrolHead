@@ -39,6 +39,7 @@ public class ReviewsDAO {
         while(rs.next()){
             reviews.add(new Review(rs.getString("title"), rs.getString("body"), rs.getString("car"), rs.getString("userid")));
         }
+        c.close();
         return reviews;
     }
     
@@ -52,5 +53,6 @@ public class ReviewsDAO {
         instr.setInt(3, car);
         instr.setInt(4, user);
         instr.execute();
+        c.close();
     }
 }

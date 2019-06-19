@@ -76,6 +76,7 @@ public class DrivetrainDAO {
         instr2.setInt(4, pow);
         instr2.setInt(5, toq);
         instr2.execute();
+        c.close();
     }
     
     public static void computePopularity() throws NamingException, SQLException{
@@ -97,6 +98,7 @@ public class DrivetrainDAO {
                 ps.executeUpdate();
             }
         }
+        c.close();
     }
     
     public static ArrayList<PopularityItem> topFavoriteCars() throws NamingException, SQLException{
@@ -116,7 +118,7 @@ public class DrivetrainDAO {
         for(int i = 0; i < 3; i++){
             topFavorites.add(it.next());
         }
-        
+        c.close();
         return topFavorites;
     }
 }

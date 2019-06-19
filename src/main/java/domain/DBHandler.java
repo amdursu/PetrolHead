@@ -27,6 +27,7 @@ public class DBHandler {
         Connection c = DBConnection.getConnection();
         Statement instr1 = c.createStatement();
         if(emailExists(email)){
+            c.close();
             return false;
         }
         PreparedStatement instr2 = c.prepareStatement(sql);
@@ -35,6 +36,7 @@ public class DBHandler {
         instr2.setString(3, email);
         instr2.setString(4, sha1(password));
         instr2.execute();
+        c.close();
         return true;
     }
     
@@ -46,9 +48,11 @@ public class DBHandler {
         
         while(rs.next()){
             if(rs.getString("email").equals(email) && rs.getString("password").equals(password)){
+                c.close();
                 return true;
             }
         }
+        c.close();
         return false;
     }
     
@@ -59,9 +63,11 @@ public class DBHandler {
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
             if(rs.getString("email").equals(email)){
+                c.close();
                 return true;
             }
         }
+        c.close();
         return false;
     }
     
@@ -82,6 +88,7 @@ public class DBHandler {
         ResultSet rs = instr.executeQuery(sql);
         
         rs.next();
+        c.close();
         return rs.getString("name");
     }
     
@@ -93,9 +100,11 @@ public class DBHandler {
         
         while (rs.next()){
             if(rs.getString("email").equals(email)){
+                c.close();
                 return true;
             }
         }
+        c.close();
         return false;
     }
     
@@ -107,9 +116,11 @@ public class DBHandler {
         
         while (rs.next()){
             if(rs.getString("email").equals(email)){
+                c.close();
                 return true;
             }
         }
+        c.close();
         return false;
     }
     
@@ -119,9 +130,10 @@ public class DBHandler {
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
-            System.out.println(rs.getInt("COUNT(*)"));
-            return rs.getInt("COUNT(*)");
+            c.close();
+            return rs.getInt("count");
         }
+        c.close();
         return 0;
     }
     
@@ -132,9 +144,11 @@ public class DBHandler {
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
             if(rs.getString("email").equals(email)){
+                c.close();
                 return rs.getInt("id");
             }
         }
+        c.close();
         return 0;
     }
     
@@ -147,6 +161,7 @@ public class DBHandler {
         while(rs.next()){
             name = rs.getString("name") + " " + rs.getString("surname");
         }
+        c.close();
         return name;
     }
 }

@@ -40,6 +40,7 @@ public class ManufacturersDAO {
             Manufacturer m = new Manufacturer(rs.getString("name"), rs.getString("image_path"));
             manufacturers.add(m);
         }
+        c.close();
         return manufacturers;
     }
     
@@ -50,6 +51,7 @@ public class ManufacturersDAO {
         instr.setString(1, name);
         instr.setString(2, image);
         instr.execute();
+        c.close();
     }
     
     

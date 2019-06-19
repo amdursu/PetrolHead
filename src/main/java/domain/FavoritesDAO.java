@@ -36,9 +36,11 @@ public class FavoritesDAO {
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
             if(rs.getString("model").equals(model) && rs.getInt("userid") == userID && rs.getInt("drivetrain") == drivetrainID){
+                c.close();
                 return true;
             }
         }
+        c.close();
         return false;
     }
     
@@ -66,8 +68,10 @@ public class FavoritesDAO {
         
         if(!favoriteExists(model, userID, drivetrainID)){
             instr.execute();
+            c.close();
             return true;
         }
+        c.close();
         return false;
     }
     
@@ -87,7 +91,7 @@ public class FavoritesDAO {
                     rs.getString("transmission"), rs.getInt("power"), rs.getInt("torque"), rs.getInt("popularity")));
             favorites.add(f);
         }
-        
+        c.close();
         return favorites;
     }
     
@@ -107,7 +111,7 @@ public class FavoritesDAO {
                 topFavorites.add(f);
             }
         }
-        
+        c.close();
         return topFavorites;
     }
 }

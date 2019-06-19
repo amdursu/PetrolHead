@@ -41,6 +41,7 @@ public class CarsDAO {
             Car car = new Car(rs.getString("manufacturer"), rs.getString("model"), rs.getString("img"), rs.getString("description"));
             cars.add(car);
         }
+        c.close();
         return cars;
     }
     
@@ -53,6 +54,7 @@ public class CarsDAO {
         while(rs.next()){
             cars.add(new Car(m.getName(), rs.getString("model"), rs.getString("img"), ""));
         }
+        c.close();
         return cars;
     }
     
@@ -62,8 +64,10 @@ public class CarsDAO {
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
+            c.close();
             return rs.getInt("id");        
         }
+        c.close();
         return 0;
     }
     
@@ -76,6 +80,7 @@ public class CarsDAO {
         instr.setString(3, image);
         instr.setString(4, description);
         instr.execute();
+        c.close();
     }
     
 }
