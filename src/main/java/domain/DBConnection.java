@@ -24,8 +24,8 @@ public class DBConnection {
         //Context ctx = new InitialContext();
         //DataSource dts = (DataSource) ctx.lookup("jdbc/PetrolHead");
         PoolProperties p = new PoolProperties();
-          //p.setUrl(System.getenv("JDBC_DATABASE_URL"));
-          p.setUrl("jdbc:postgresql://localhost:5432/andrei");
+          p.setUrl(System.getenv("JDBC_DATABASE_URL"));
+          //p.setUrl("jdbc:postgresql://localhost:5432/andrei");
           p.setDriverClassName("org.postgresql.Driver");
           p.setUsername("andrei");
           p.setPassword("a");
