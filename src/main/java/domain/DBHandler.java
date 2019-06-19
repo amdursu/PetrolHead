@@ -23,7 +23,7 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class DBHandler {
     public static boolean register(String name, String surname, String email, String password) throws NamingException, SQLException, NoSuchAlgorithmException, UnsupportedEncodingException{
-        String sql = "INSERT INTO \"PetrolHead\".users (name, surname, email, password) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO \"PetrolHead\".users (name, surname, email, password, type) VALUES (?, ?, ?, ?, ?);";
         Connection c = DBConnection.getConnection();
         Statement instr1 = c.createStatement();
         if(emailExists(email)){
@@ -34,6 +34,7 @@ public class DBHandler {
         instr2.setString(2, surname);
         instr2.setString(3, email);
         instr2.setString(4, sha1(password));
+        instr2.setString(5, "user");
         instr2.execute();
         return true;
     }
