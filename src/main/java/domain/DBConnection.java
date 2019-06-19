@@ -36,9 +36,9 @@ public class DBConnection {
           p.setValidationInterval(30000);
           p.setTimeBetweenEvictionRunsMillis(30000);
           p.setMaxActive(3000);
-          p.setInitialSize(10);
+          p.setInitialSize(5);
           p.setMaxWait(10000);
-          p.setRemoveAbandonedTimeout(60);
+          p.setRemoveAbandonedTimeout(30);
           p.setMinEvictableIdleTimeMillis(30000);
           p.setMinIdle(10);
           p.setLogAbandoned(true);
