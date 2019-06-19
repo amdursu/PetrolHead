@@ -27,7 +27,6 @@ public class DBHandler {
         Connection c = DBConnection.getConnection();
         Statement instr1 = c.createStatement();
         if(emailExists(email)){
-            c.close();
             return false;
         }
         PreparedStatement instr2 = c.prepareStatement(sql);
