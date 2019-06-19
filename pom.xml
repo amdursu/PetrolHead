@@ -92,7 +92,7 @@
                     <execution>
                         <id>1</id>
                         <phase>package</phase>
-                        <goals><goal>copy-dependencies</goal></goals>
+                        <goals><goal>copy</goal></goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
