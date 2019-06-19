@@ -22,8 +22,8 @@ import javax.xml.bind.DatatypeConverter;
  * @author andrei
  */
 public class DBHandler {
-    public static boolean register(String name, String surname, String email, String password) throws NamingException, SQLException{
-        String sql = "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, sha1(?));";
+    public static boolean register(String name, String surname, String email, String password) throws NamingException, SQLException, NoSuchAlgorithmException, UnsupportedEncodingException{
+        String sql = "INSERT INTO \"PetrolHead\".users (name, surname, email, password) VALUES (?, ?, ?, ?);";
         Connection c = DBConnection.getConnection();
         Statement instr1 = c.createStatement();
         if(emailExists(email)){
@@ -33,13 +33,13 @@ public class DBHandler {
         instr2.setString(1, name);
         instr2.setString(2, surname);
         instr2.setString(3, email);
-        instr2.setString(4, password);
+        instr2.setString(4, sha1(password));
         instr2.execute();
         return true;
     }
     
     public static boolean login(String email, String password) throws NamingException, SQLException{
-        String sql = "SELECT email, password FROM users";
+        String sql = "SELECT email, password FROM \"PetrolHead\".users";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -53,7 +53,7 @@ public class DBHandler {
     }
     
     public static boolean emailExists(String email) throws NamingException, SQLException{
-        String sql = "SELECT email FROM users";
+        String sql = "SELECT email FROM \"PetrolHead\".users";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -76,7 +76,7 @@ public class DBHandler {
     }
     
     public static String getName(String email) throws NamingException, SQLException{
-        String sql = "SELECT name FROM users WHERE email = '" + email + "';";
+        String sql = "SELECT name FROM \"PetrolHead\".users WHERE email = '" + email + "';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -86,7 +86,7 @@ public class DBHandler {
     }
     
     public static boolean isAdmin(String email) throws NamingException, SQLException{
-        String sql = "SELECT email FROM users WHERE type = 'admin';";
+        String sql = "SELECT email FROM \"PetrolHead\".users WHERE type = 'admin';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -100,7 +100,7 @@ public class DBHandler {
     }
     
     public static boolean isOwner(String email) throws NamingException, SQLException{
-        String sql = "SELECT email FROM users WHERE type = 'owner';";
+        String sql = "SELECT email FROM \"PetrolHead\".users WHERE type = 'owner';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -114,7 +114,7 @@ public class DBHandler {
     }
     
     public static int noUsers() throws NamingException, SQLException{
-        String sql = "SELECT COUNT(*) FROM users WHERE type = 'user';";
+        String sql = "SELECT COUNT(*) FROM \"PetrolHead\".users WHERE type = 'user';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -126,7 +126,7 @@ public class DBHandler {
     }
     
     public static int getUserID(String email) throws NamingException, SQLException{
-        String sql = "SELECT id, email FROM users;";
+        String sql = "SELECT id, email FROM \"PetrolHead\".users;";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -139,7 +139,7 @@ public class DBHandler {
     }
     
     public static String getUserName(int userID) throws NamingException, SQLException{
-        String sql = "SELECT name, surname FROM users WHERE id = " + userID + ";";
+        String sql = "SELECT name, surname FROM \"PetrolHead\".users WHERE id = '" + userID + "';";
         String name = "";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();

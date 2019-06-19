@@ -31,11 +31,11 @@ public class FavoritesDAO {
     
     public static boolean favoriteExists(String model, int userID, int drivetrainID) throws SQLException, NamingException{
         Connection c = DBConnection.getConnection();
-        String sql = "SELECT c.model, d.power, f.user, f.drivetrain FROM favorites f JOIN drivetrains d ON d.id = f.drivetrain JOIN cars c ON c.id = d.car_id;";
+        String sql = "SELECT s.model, d.power, f.userid, f.drivetrain FROM \"PetrolHead\".favorites f JOIN \"PetrolHead\".drivetrains d ON d.id = f.drivetrain JOIN \"PetrolHead\".cars s ON s.id = d.car_id;";
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
-            if(rs.getString("model").equals(model) && rs.getInt("user") == userID && rs.getInt("drivetrain") == drivetrainID){
+            if(rs.getString("model").equals(model) && rs.getInt("userid") == userID && rs.getInt("drivetrain") == drivetrainID){
                 return true;
             }
         }
@@ -45,10 +45,10 @@ public class FavoritesDAO {
     public static boolean addFavorite(String email, String model, String engine, String transmission, int power) throws NamingException, SQLException{
         Connection c = DBConnection.getConnection();
         
-        String sql1 = "SELECT id FROM users WHERE email = '" + email +"';";
-        String sql2 = "SELECT d.id FROM drivetrains d JOIN cars c ON c.id = d.car_id WHERE c.model = \"" + model 
-                + "\" AND d.engine = \"" + engine + "\" AND d.transmission = \"" + transmission + "\" AND d.power = " + power + ";";
-        String sql = "INSERT INTO favorites (user, drivetrain) VALUES (?, ?);";
+        String sql1 = "SELECT id FROM \"PetrolHead\".users WHERE email = '" + email +"';";
+        String sql2 = "SELECT d.id FROM \"PetrolHead\".drivetrains d JOIN \"PetrolHead\".cars s ON s.id = d.car_id WHERE s.model = '" + model 
+                + "' AND d.engine = '" + engine + "' AND d.transmission = '" + transmission + "' AND d.power = '" + power + "';";
+        String sql = "INSERT INTO \"PetrolHead\".favorites (userid, drivetrain) VALUES (?, ?);";
         
         PreparedStatement instr = c.prepareStatement(sql);
         
@@ -75,9 +75,9 @@ public class FavoritesDAO {
         ArrayList<Favorite> favorites = new ArrayList<>();
         Connection c = DBConnection.getConnection();
         
-        String sql = "SELECT c.manufacturer, c.model, c.img, c.description, d.engine, d.transmission, d.power, d.torque, d.popularity "
-                + "FROM favorites f JOIN drivetrains d ON f.drivetrain = d.id JOIN cars c ON d.car_id = c.id "
-                + "JOIN users u ON u.id = f.user WHERE u.email = '" + user + "';";
+        String sql = "SELECT s.manufacturer, s.model, s.img, s.description, d.engine, d.transmission, d.power, d.torque, d.popularity "
+                + "FROM \"PetrolHead\".favorites f JOIN \"PetrolHead\".drivetrains d ON f.drivetrain = d.id JOIN \"PetrolHead\".cars s ON d.car_id = s.id "
+                + "JOIN \"PetrolHead\".users u ON u.id = f.userid WHERE u.email = '" + user + "';";
         
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -96,8 +96,8 @@ public class FavoritesDAO {
         Connection c = DBConnection.getConnection();
         
         for(PopularityItem p : top){
-            String sql = "SELECT c.manufacturer, c.model, c.img, c.description, d.engine, d.transmission, d.engine, d.power, d.torque, d.popularity FROM "
-                    + "drivetrains d JOIN cars c ON c.id = d.car_id WHERE d.id = " + p.getDrivetrainID() + ";";
+            String sql = "SELECT s.manufacturer, s.model, s.img, s.description, d.engine, d.transmission, d.engine, d.power, d.torque, d.popularity FROM "
+                    + "\"PetrolHead\".drivetrains d JOIN \"PetrolHead\".cars s ON s.id = d.car_id WHERE d.id = '" + p.getDrivetrainID() + "';";
             Statement instr = c.createStatement();
             ResultSet rs = instr.executeQuery(sql);
             while(rs.next()){

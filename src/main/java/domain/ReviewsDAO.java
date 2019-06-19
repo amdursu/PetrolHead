@@ -32,18 +32,18 @@ public class ReviewsDAO {
     
     public static ArrayList<Review> getReviews(String model) throws NamingException, SQLException{
         ArrayList<Review> reviews = new ArrayList<>();
-        String sql = "SELECT title, body, car, user FROM reviews WHERE car = " + getCarID(model) + ";";
+        String sql = "SELECT title, body, car, userid FROM \"PetrolHead\".reviews WHERE car = '" + getCarID(model) + "';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
-            reviews.add(new Review(rs.getString("title"), rs.getString("body"), rs.getString("car"), rs.getString("user")));
+            reviews.add(new Review(rs.getString("title"), rs.getString("body"), rs.getString("car"), rs.getString("userid")));
         }
         return reviews;
     }
     
     public static void addReview(String title, String body, int car, int user) throws NamingException, SQLException{
-        String sql = "INSERT INTO reviews (title, body, car, user) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO \"PetrolHead\".reviews (title, body, car, userid) VALUES (?, ?, ?, ?);";
         Connection c = DBConnection.getConnection();
         PreparedStatement instr = c.prepareStatement(sql);
         

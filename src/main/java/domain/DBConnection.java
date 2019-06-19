@@ -24,10 +24,10 @@ public class DBConnection {
         //Context ctx = new InitialContext();
         //DataSource dts = (DataSource) ctx.lookup("jdbc/PetrolHead");
         PoolProperties p = new PoolProperties();
-          p.setUrl("jdbc:mysql://localhost:3306/PetrolHead");
-          p.setDriverClassName("com.mysql.jdbc.Driver");
-          p.setUsername("root");
-          p.setPassword("elizabeth");
+          p.setUrl("jdbc:postgresql://localhost:5432/andrei");
+          p.setDriverClassName("org.postgresql.Driver");
+          p.setUsername("andrei");
+          p.setPassword("a");
           p.setJmxEnabled(true);
           p.setTestWhileIdle(false);
           p.setTestOnBorrow(true);
@@ -35,7 +35,7 @@ public class DBConnection {
           p.setTestOnReturn(false);
           p.setValidationInterval(30000);
           p.setTimeBetweenEvictionRunsMillis(30000);
-          p.setMaxActive(100);
+          p.setMaxActive(3000);
           p.setInitialSize(10);
           p.setMaxWait(10000);
           p.setRemoveAbandonedTimeout(60);
@@ -48,7 +48,7 @@ public class DBConnection {
             "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
           DataSource datasource = new DataSource();
           datasource.setPoolProperties(p);
-        Connection c = datasource.getConnection();
+          Connection c = datasource.getConnection();
         return c;
     }
 }

@@ -31,7 +31,7 @@ public class CarsDAO {
     
     public static ArrayList<Car> getCars() throws NamingException, SQLException{
         ArrayList<Car> cars = new ArrayList<>();
-        String sql = "SELECT manufacturer, model, img, description FROM cars;";
+        String sql = "SELECT manufacturer, model, img, description FROM \"PetrolHead\".cars;";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -46,7 +46,7 @@ public class CarsDAO {
     
     public static ArrayList<Car> getCars(Manufacturer m) throws SQLException, NamingException{
         ArrayList<Car> cars = new ArrayList<>();
-        String sql = "SELECT model, img FROM cars WHERE manufacturer=\"" + m.getName() + "\";";
+        String sql = "SELECT model, img FROM \"PetrolHead\".cars WHERE manufacturer='" + m.getName() + "';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -57,7 +57,7 @@ public class CarsDAO {
     }
     
     public static int getCarID(String model) throws NamingException, SQLException{
-        String sql = "SELECT id FROM cars WHERE model = '" + model + "';";
+        String sql = "SELECT id FROM \"PetrolHead\".cars WHERE model = '" + model + "';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -68,7 +68,7 @@ public class CarsDAO {
     }
     
     public static void addCar(String manufacturer, String model, String image, String description) throws NamingException, SQLException{
-        String sql = "INSERT INTO cars (manufacturer, model, img, description) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO \"PetrolHead\".cars (manufacturer, model, img, description) VALUES (?, ?, ?, ?);";
         Connection c = DBConnection.getConnection();
         PreparedStatement instr = c.prepareStatement(sql);
         instr.setString(1, manufacturer);

@@ -9,6 +9,7 @@ import static domain.DBHandler.login;
 import static domain.DBHandler.register;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,7 @@ public class RegistrationController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, NamingException, SQLException {
+            throws ServletException, IOException, NamingException, SQLException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -68,6 +69,8 @@ public class RegistrationController extends HttpServlet {
             Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,6 +90,8 @@ public class RegistrationController extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

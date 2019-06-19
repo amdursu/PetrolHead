@@ -31,7 +31,7 @@ public class ManufacturersDAO {
     
     public static ArrayList<Manufacturer> getManufacturers() throws NamingException, SQLException{
         ArrayList<Manufacturer> manufacturers = new ArrayList<>();
-        String sql = "SELECT name, image_path FROM manufacturers;";
+        String sql = "SELECT name, image_path FROM \"PetrolHead\".manufacturers;";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -44,7 +44,7 @@ public class ManufacturersDAO {
     }
     
     public static void addManufacturer(String name, String image) throws NamingException, SQLException{
-        String sql = "INSERT INTO manufacturers (name, image_path) VALUES (?, ?);";
+        String sql = "INSERT INTO \"PetrolHead\".manufacturers (name, image_path) VALUES (?, ?);";
         Connection c = DBConnection.getConnection();
         PreparedStatement instr = c.prepareStatement(sql);
         instr.setString(1, name);

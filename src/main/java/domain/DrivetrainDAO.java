@@ -31,7 +31,7 @@ public class DrivetrainDAO {
     
     public static List<Drivetrain> getDrivetrains() throws NamingException, SQLException{
         List<Drivetrain> drivetrains = new ArrayList<>();
-        String sql = "SELECT c.model, d.engine, d.transmission, d.power, d.torque, d.popularity FROM drivetrains d JOIN cars c ON d.car_id = c.id;";
+        String sql = "SELECT s.model, d.engine, d.transmission, d.power, d.torque, d.popularity FROM \"PetrolHead\".drivetrains d JOIN \"PetrolHead\".cars s ON d.car_id = s.id;";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -44,8 +44,8 @@ public class DrivetrainDAO {
     
     public static List<Drivetrain> getDrivetrains(String carModel) throws NamingException, SQLException{
         List<Drivetrain> drivetrains = new ArrayList<>();
-        String sql = "SELECT d.engine, d.transmission, d.power, d.torque, d.popularity FROM drivetrains d "
-                + "JOIN cars c ON c.id = d.car_id WHERE c.model = '" + carModel + "';";
+        String sql = "SELECT d.engine, d.transmission, d.power, d.torque, d.popularity FROM \"PetrolHead\".drivetrains d "
+                + "JOIN \"PetrolHead\".cars s ON s.id = d.car_id WHERE s.model = '" + carModel + "';";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
@@ -60,8 +60,8 @@ public class DrivetrainDAO {
         int pow = Integer.parseInt(power);
         int toq = Integer.parseInt(torque);
         int id = 0;
-        String sql1 = "SELECT id FROM cars WHERE model = '" + carModel + "';";
-        String sql2 = "INSERT INTO drivetrains (car_id, engine, transmission, power, torque, popularity) VALUES (?, ?, ?, ?, ?, 0);";
+        String sql1 = "SELECT id FROM \"PetrolHead\".cars WHERE model = '" + carModel + "';";
+        String sql2 = "INSERT INTO \"PetrolHead\".drivetrains (car_id, engine, transmission, power, torque, popularity) VALUES (?, ?, ?, ?, ?, 0);";
         Connection c = DBConnection.getConnection();
         Statement instr1 = c.createStatement();
         ResultSet rs = instr1.executeQuery(sql1);
@@ -80,19 +80,19 @@ public class DrivetrainDAO {
     
     public static void computePopularity() throws NamingException, SQLException{
         
-        String sql = "SELECT id FROM drivetrains;";
+        String sql = "SELECT id FROM \"PetrolHead\".drivetrains;";
         
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
         while(rs.next()){
-            String sql2 = "SELECT COUNT(*) FROM favorites WHERE drivetrain = " + rs.getInt("id") + ";";
+            String sql2 = "SELECT COUNT(*) FROM \"PetrolHead\".favorites WHERE drivetrain = '" + rs.getInt("id") + "';";
             Statement s = c.createStatement();
             ResultSet rs2 = s.executeQuery(sql2);
             while(rs2.next()){
-                String sql3 = "UPDATE drivetrains SET popularity = ?  WHERE id = ?;"; 
+                String sql3 = "UPDATE \"PetrolHead\".drivetrains SET popularity = ?  WHERE id = ?;"; 
                 PreparedStatement ps = c.prepareStatement(sql3);
-                ps.setInt(1, rs2.getInt("COUNT(*)"));
+                ps.setInt(1, rs2.getInt("count"));
                 ps.setInt(2, rs.getInt("id"));
                 ps.executeUpdate();
             }
@@ -102,7 +102,7 @@ public class DrivetrainDAO {
     public static ArrayList<PopularityItem> topFavoriteCars() throws NamingException, SQLException{
         ArrayList<PopularityItem> drivetrains = new ArrayList<>();
         ArrayList<PopularityItem> topFavorites = new ArrayList<>();
-        String sql = "SELECT id, popularity FROM drivetrains;";
+        String sql = "SELECT id, popularity FROM \"PetrolHead\".drivetrains;";
         Connection c = DBConnection.getConnection();
         Statement instr = c.createStatement();
         ResultSet rs = instr.executeQuery(sql);
