@@ -14,17 +14,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
-    <profiles>
-        <profile>
-            <activation>
-                <property>
-                    <name>env.DYNO</name>
-                </property>
-            </activation>
-        </profile>
-    </profiles>
-    
-    
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
@@ -99,23 +88,24 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
                 <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals><goal>copy</goal></goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.github.jsimone</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.20.0</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
+                  <execution>
+                    <phase>package</phase>
+                    <goals><goal>copy</goal></goals>
+                    <configuration>
+                      <artifactItems>
+                        <artifactItem>
+                          <groupId>com.github.jsimone</groupId>
+                          <artifactId>webapp-runner</artifactId>
+                          <version>7.0.57.2</version>
+                          <destFileName>webapp-runner.jar</destFileName>
+                        </artifactItem>
+                      </artifactItems>
+                    </configuration>
+                  </execution>
                 </executions>
-        </plugin>
+            </plugin>
         </plugins>
     </build>
 
